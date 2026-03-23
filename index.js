@@ -61,7 +61,7 @@ app.get('/sneakers', (req, res) => {
 });
 
 // Catch-all - respond 200 to everything so game doesn't hang
-app.all('*', (req, res) => {
+app.all('/{*path}', (req, res) => {
   res.status(200).json({ success: true });
 });
 
