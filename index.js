@@ -16,6 +16,13 @@ admin.initializeApp({
   })
 });
 
+// Log ALL incoming requests
+app.use((req, res, next) => {
+  console.log(`\n=== ${req.method} ${req.url}`);
+  console.log('Body:', JSON.stringify(req.body, null, 2));
+  next();
+});
+
 // Health check
 app.get('/', (req, res) => {
   res.json({ status: 'Solebound server is running!' });
@@ -51,6 +58,11 @@ app.get('/player', async (req, res) => {
 // Sneakers endpoint
 app.get('/sneakers', (req, res) => {
   res.json([]);
+});
+
+// Catch-all - respond 200 to everything so game doesn't hang
+app.all('*', (req, res) => {
+  res.status(200).json({ success: true });
 });
 
 const PORT = process.env.PORT || 3000;
